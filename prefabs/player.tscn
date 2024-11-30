@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://dw47a6opnqsqk"]
+
+[ext_resource type="Script" path="res://scripts/playermove.gd" id="1_wnevo"]
+[ext_resource type="Script" path="res://scripts/playercamera.gd" id="2_bmfxd"]
+[ext_resource type="PackedScene" uid="uid://dkjahoicihe7b" path="res://prefabs/test_wpn.tscn" id="3_th20t"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c7t2b"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_rsuc5"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_qgnqy"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_wnevo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_c7t2b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_rsuc5")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("2_bmfxd")
+
+[node name="SpringArm3D" type="Node3D" parent="Camera3D"]
+
+[node name="testwpn" parent="Camera3D/SpringArm3D" instance=ExtResource("3_th20t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.518092, -0.470308, -0.68348)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Camera3D/SpringArm3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+visible = false
+spring_length = 20.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D/SpringArm3D/SpringArm3D"]
+mesh = SubResource("TorusMesh_qgnqy")

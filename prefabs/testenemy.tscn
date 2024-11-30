@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://c1hww2qcex0d"]
+
+[ext_resource type="Script" path="res://scripts/baseenemy.gd" id="1_s4vjt"]
+[ext_resource type="Script" path="res://scripts/enemy_hitbox_base.gd" id="2_dhkpx"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_nha6o"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_y1toh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1ey3k"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e2kgr"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[node name="TestBaseEnemy" type="Node3D" node_paths=PackedStringArray("hitboxes")]
+script = ExtResource("1_s4vjt")
+max_health = 60
+hitboxes = [NodePath("Base_StaticBody3D"), NodePath("Crit_StaticBody3D")]
+
+[node name="Base_StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 3
+script = ExtResource("2_dhkpx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Base_StaticBody3D"]
+mesh = SubResource("SphereMesh_nha6o")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Base_StaticBody3D"]
+shape = SubResource("SphereShape3D_y1toh")
+
+[node name="Crit_StaticBody3D" type="StaticBody3D" parent="."]
+script = ExtResource("2_dhkpx")
+critical = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Crit_StaticBody3D"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0.5)
+mesh = SubResource("BoxMesh_1ey3k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Crit_StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+shape = SubResource("BoxShape3D_e2kgr")

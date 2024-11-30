@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkjahoicihe7b"]
+
+[ext_resource type="Script" path="res://scripts/weaponbase.gd" id="1_tsigc"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_tsigc")
+per_shot_damage = 10
+base_range = 50.0
+base_range_max = 70.0
+base_mag_size = 17
+reload_time = 1.0
+firing_delay = 0.1
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.33608, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.290649, 0)
+size = Vector3(0.103516, 0.418701, 0.176758)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.556903, 0.187213)
+size = Vector3(0.1875, 0.18457, 0.412109)

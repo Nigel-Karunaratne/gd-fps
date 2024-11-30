@@ -1,0 +1,112 @@
+[gd_scene load_steps=11 format=3 uid="uid://bynwa78y0dton"]
+
+[ext_resource type="PackedScene" uid="uid://dw47a6opnqsqk" path="res://prefabs/player.tscn" id="1_qbl68"]
+[ext_resource type="PackedScene" uid="uid://g7kec7v1hfci" path="res://prefabs/decal_holder.tscn" id="1_vlu3m"]
+[ext_resource type="PackedScene" uid="uid://c1hww2qcex0d" path="res://prefabs/testenemy.tscn" id="2_nnqj2"]
+[ext_resource type="Script" path="res://scripts/enemy_hud_manager.gd" id="4_tgxyi"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3jmly"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_w2pxb"]
+sky_material = SubResource("ProceduralSkyMaterial_3jmly")
+
+[sub_resource type="Environment" id="Environment_ava7u"]
+background_mode = 2
+sky = SubResource("Sky_w2pxb")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_75o51"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ksa7o"]
+bg_color = Color(0, 0, 0, 0.0392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_620uw"]
+bg_color = Color(3.56168e-06, 0.710854, 0.468749, 1)
+
+[node name="TestSceneRoot" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ava7u")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 5.5, 0)
+shadow_enabled = true
+
+[node name="DecalHolder" parent="." instance=ExtResource("1_vlu3m")]
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_qbl68")]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0342121, -0.460712, 0.0211983)
+size = Vector3(15, 1, 17)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 4.25, 4.5)
+size = Vector3(1.5, 1.5, 2)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0.5, -5.5)
+size = Vector3(3.5, 1, 1)
+material = SubResource("StandardMaterial3D_75o51")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.5, 0.25)
+size = Vector3(1, 1, 3.5)
+material = SubResource("StandardMaterial3D_75o51")
+
+[node name="enemy" parent="." instance=ExtResource("2_nnqj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, -2.5)
+
+[node name="enemy2" parent="." instance=ExtResource("2_nnqj2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.91254, 1, -2.5)
+
+[node name="enemy3" parent="." instance=ExtResource("2_nnqj2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 24.919, 1, 2.49854)
+
+[node name="EnemyHUDManager" type="Node3D" parent="." node_paths=PackedStringArray("health_bar")]
+script = ExtResource("4_tgxyi")
+health_bar = NodePath("../CanvasLayer/Control/EnemyHealthBar")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.831373)
+
+[node name="EnemyHealthBar" type="ProgressBar" parent="CanvasLayer/Control"]
+layout_mode = 1
+offset_right = 222.0
+offset_bottom = 13.0
+pivot_offset = Vector2(131, 22)
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_ksa7o")
+theme_override_styles/fill = SubResource("StyleBoxFlat_620uw")
+step = 1.0
+value = 100.0
+show_percentage = false

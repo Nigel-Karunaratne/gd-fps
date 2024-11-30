@@ -1,0 +1,13 @@
+perks:
+
+rapid fire (increase rpm)
+big mag (increase magazine size)
+stable/sharp (little to no recoil/bloom?)
+quick load (quick reloading)
+
+energy (projectile instead of hitscan, does more damage)
+
+
+ice (slow down target's firing speed)
+fire (applies fire, does small damage over time. cannot be re-applied?)
+charge (damage is lower but hits build a charge, invisible to player? after charge hits 10x stacks, deals big damage. little damage hits + 1 large damage must be > base damage)
