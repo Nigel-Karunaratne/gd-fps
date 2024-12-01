@@ -2,6 +2,7 @@ class_name PlayerCamera
 extends Camera3D
 
 var look_m_sense : float = 0.1
+var look_c_sense : float = 3
 
 var root : Node3D
 
@@ -20,6 +21,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-#func _process(delta: float) -> void:
+func _process(delta: float) -> void:
 	#global_rotate(Vector3.AXIS_X,Input.get_axis("look_m_v_up","look_m_v_down"))
-	#pass
+	var input_vec : Vector2 = Input.get_vector("look_left","look_right","look_up","look_down")
+	root.rotate_y(deg_to_rad(-input_vec.x * look_c_sense))
+	rotate_x(deg_to_rad(-input_vec.y * look_c_sense))
+	rotation.x = clamp(rotation.x, deg_to_rad(-85), deg_to_rad(85))

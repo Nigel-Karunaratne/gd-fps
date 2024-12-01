@@ -9,13 +9,13 @@ enum PlayerMovementState {
 
 const WALK_SPEED : float = 7.0
 const SPRINT_SPEED : float = 8.0
-const JUMP_VELOCITY : float = 10.5
+const JUMP_VELOCITY : float = 10
 const AIR_ACCEL_MULTIPLIER : float = 0.7
 const SHORT_HOP_MULTIPLIER : float = 0.6
 const MOVE_ACCEL : float = 0.7
 
 var speed : float = WALK_SPEED
-var gravity : float = 29
+var gravity : float = 26
 
 var _input_direction: Vector2
 
