@@ -1,9 +1,9 @@
 perks:
 
 rapid fire (increase rpm)
-big mag (increase magazine size)
+big mag (double magazine size)
 stable/sharp (little to no recoil/bloom?)
-quick load (quick reloading)
+quick load (double reload speed)
 
 energy (projectile instead of hitscan, does more damage)
 

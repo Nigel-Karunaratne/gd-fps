@@ -20,12 +20,17 @@ var current_reserve_count : int # inventory_count * mag_size, represents number 
 
 @export_category("Firing")
 @export var is_automatic : bool    ## is this weapon full auto or semi-auto?
-@export var firing_spread : Curve2D    ## the spread pattern of the weapon if firing multiple bullets 
 
 @export var default_accuracy_cone_radius : float ##
-@export var max_bloom_cone_radius : float        ##
+@export var max_bloom_cone_radius : float        ## The maximum bloom ammount
+@export var bloom_increase_per_pull : float      ## The increase in bloom per shot fired
+@export var bloom_decrease_scalar : float        ## The constant decrease in bloom per second. The higher it is, the faster bloom resets.
+var _current_bloom : float                       ## The current bloom to use when firing
 
 @export var damage_fallof_curve : Curve2D
+
+@export var camera_recoil_ammount_vertical : float ## The ammount of fixed vertical movement done by the camera per shot. Keep low
+@export var camera_recoil_variability_horizontal : float ## The ammount of variable horizontal movement done by the camera per shot. Keep *very* low
 
 @export_category("Reloading")
 @export var reload_time : float               ## How long, in seconds, to reload
@@ -47,6 +52,7 @@ func _ready() -> void:
 	current_reserve_count = base_inventory_count * current_mag_size
 
 func _process(delta: float) -> void:
+	# Handle Weapon Timers
 	if _current_firing_delay > 0:
 		_current_firing_delay -= delta
 	if _reloading_timer > 0:
@@ -54,8 +60,12 @@ func _process(delta: float) -> void:
 		if _reloading_timer <= 0:
 			# Finished reloading
 			current_mag_count = current_mag_size
-
-func _unhandled_input(_event: InputEvent) -> void:
+	
+	if _current_bloom > 0:
+		_current_bloom -= delta * bloom_decrease_scalar
+	#print(_current_bloom)
+	
+	# Get Input
 	if Input.is_action_just_pressed("reload"):
 		reload_weapon()
 	
@@ -82,7 +92,10 @@ func fire_weapon() -> bool:
 	match damage_type:
 		ProjectileType.RAYCAST:
 			var space = get_world_3d().direct_space_state
-			var query = PhysicsRayQueryParameters3D.create(get_parent().global_position, get_parent().global_position  + (global_basis * Vector3(0,0,-base_range)))
+			var ray_end: Vector3 = get_parent().global_position  + (global_basis * Vector3(randf_range(-_current_bloom * 0.1,_current_bloom* 0.1),randf_range(-_current_bloom * 0.1,_current_bloom* 0.1),-base_range))
+			#var ray_end: Vector3 = get_parent().global_position  + (global_basis * Vector3(0,0,-base_range))
+			var query = PhysicsRayQueryParameters3D.create(get_parent().global_position, ray_end)
+#			# TODO - make bloom not vary w/ range!
 			query.exclude = [self]
 			var result = space.intersect_ray(query)
 			if !result.is_empty(): # hit
@@ -100,4 +113,6 @@ func fire_weapon() -> bool:
 		_:
 			push_error("ProjectileType on a WeaponBase is undefined, and firing was attempted")
 			pass
+	_current_bloom = min(_current_bloom + bloom_increase_per_pull, max_bloom_cone_radius)
+	(get_viewport().get_camera_3d() as PlayerCamera).add_recoil(camera_recoil_ammount_vertical/10, camera_recoil_variability_horizontal/10)
 	return true

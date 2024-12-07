@@ -1,0 +1,13 @@
+Camera and Bloom
+
+Bloom:
+	You fire, it adds a set float to the bloom counter var (+= value) after firing (so first shot can be accurate)
+	If not firing (i.e. every frame), remove some from the counter var
+
+Camera:
+	minimal vertical recoil (+ horizontal?)
+	larger for semi-auto, smaller for auto
+	again, have this be a variable
+
+Auto weapons have have more bloom growth, less recoil
+Semi-Auto weapons have more recoil, less bloom growth

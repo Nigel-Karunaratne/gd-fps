@@ -1,0 +1,7 @@
+randomly generated levels in a similar layout to that of octo expansion?[
+level:
+	pre-made level segment
+	arena
+		higher difficulty arenas guarantee better weapon drop on completing
+	another level segment
+	another arena

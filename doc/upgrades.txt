@@ -1,0 +1,13 @@
+upgrades work like player-specific weapon perks?
+
+in-run upgrades:
+	ammo refil for all weapons
+	max health increase
+	defence increase?
+		NOT more power, as that should come from weapons?
+		
+	2.5%-5% better (for all and any future weapons):
+		reload speed
+		bloom? recoil?
+		weapon range
+		

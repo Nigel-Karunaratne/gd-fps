@@ -6,8 +6,14 @@
 script = ExtResource("1_tsigc")
 per_shot_damage = 10
 base_range = 50.0
-base_range_max = 70.0
+base_range_max = 50.0
 base_mag_size = 17
+is_automatic = true
+max_bloom_cone_radius = 10.0
+bloom_increase_per_pull = 5.0
+bloom_decrease_scalar = 15.0
+camera_recoil_ammount_vertical = 10.0
+camera_recoil_variability_horizontal = 4.0
 reload_time = 1.0
 firing_delay = 0.1
 
