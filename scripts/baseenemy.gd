@@ -3,7 +3,7 @@ extends Node3D
 
 @export var max_health: int ## Maximum HP of enemy
 var health: int             ## Current HP of enemy
-@export var critical_hit_multiplier: float = 1.2 ## The multiplier for how much damage a damage instance does if it is critical
+@export var enemy_critical_hit_multiplier: float = 1 ## The multiplier, specific to THIS ENEMY, for how much damage a damage instance does if it is critical. Usually 1
 
 @export var hitboxes : Array[EnemyHitBoxBase] ## All hitboxes for this enemy
 
@@ -16,8 +16,8 @@ func _ready() -> void:
 				hitboxes.append(c)
 	hitboxes.map(func(hitbox): hitbox._enemy_ref = self)
 
-func on_hit(damage: int, is_critical: bool):
-	health -= damage * (critical_hit_multiplier if is_critical else 1)
+func on_hit(damage: int, critical_hit_multiplier: float, is_critical: bool):
+	health -= damage * (critical_hit_multiplier * enemy_critical_hit_multiplier if is_critical else 1)
 	print("HIT ENEMY FOR ", str(damage * (critical_hit_multiplier if is_critical else 1)), " DAMAGE")
 	if health <= 0:
 		die()

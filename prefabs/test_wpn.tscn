@@ -5,10 +5,10 @@
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_tsigc")
 per_shot_damage = 10
+critical_damage_multiplier = 1.5
 base_range = 50.0
 base_range_max = 50.0
 base_mag_size = 17
-is_automatic = true
 max_bloom_cone_radius = 10.0
 bloom_increase_per_pull = 5.0
 bloom_decrease_scalar = 15.0

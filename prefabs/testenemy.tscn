@@ -20,6 +20,7 @@ hitboxes = [NodePath("Base_StaticBody3D"), NodePath("Crit_StaticBody3D")]
 [node name="Base_StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 3
 script = ExtResource("2_dhkpx")
+critical = null
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Base_StaticBody3D"]
 mesh = SubResource("SphereMesh_nha6o")

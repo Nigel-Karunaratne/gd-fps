@@ -5,6 +5,7 @@ enum ProjectileType {RAYCAST, OBJECT}
 @export_category("Damage")
 @export var damage_type : ProjectileType = ProjectileType.RAYCAST
 @export var per_shot_damage : int      ## the damage, per bullet (NOT necessarily per shot), of a weapon
+@export var critical_damage_multiplier : float ## The multiplier for critical hits
 
 @export_category("Range")
 @export var base_range : float         ## the maximum distance (in m) the bullet can be fired before experiencing damage falloff (raycast)
@@ -100,7 +101,7 @@ func fire_weapon() -> bool:
 			var result = space.intersect_ray(query)
 			if !result.is_empty(): # hit
 				if result.collider is EnemyHitBoxBase: # hit enemy
-					(result.collider as EnemyHitBoxBase).on_hit(per_shot_damage)
+					(result.collider as EnemyHitBoxBase).on_hit(per_shot_damage, critical_damage_multiplier)
 				else: # hit a wall or something, add a decal
 					EventBus.s_deploydecal.emit(result.position, result.normal)
 				#var b=load("res://prefabs/anchor.tscn").instantiate()
